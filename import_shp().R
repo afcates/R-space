@@ -27,7 +27,7 @@ import_shp <- function(location,layer,id,filter,transform,fortify) {
     filter <- gsub(" IN "," %in% ",filter,ignore.case=TRUE)
     filter <- gsub("\\(","c(",filter,ignore.case=TRUE)
     #passing a logical argument from a function is not intuitive. see http://stackoverflow.com/questions/9057006/getting-strings-recognized-as-variable-names-in-r)
-    shp <- try(shp[eval(parse(text=paste("shp$",filter,sep=""))), ])
+    shp <- try(shp[eval(parse(text=paste("shp$",filter,sep=""))), ]) #does as.formula(paste("shp$", filter, sep="")) work?
     if (inherits(shp, "try-error")) {
       cat(paste("*Attempting filter gave back preceding error. Filter string is probably bad. Use 'AND' 'OR' '=' 'IN' and make sure field name exists."))
     }
