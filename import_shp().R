@@ -1,3 +1,6 @@
+########################################
+#shorten reading in, subsetting, and fortifying shp files
+########################################
 import_shp <- function(location,layer,id,filter,transform,fortify) {
   #stop() if missing core arguments
   if(missing(location) || missing(layer)) {
@@ -46,7 +49,6 @@ import_shp <- function(location,layer,id,filter,transform,fortify) {
     shp.points <- fortify(shp, region="id")
     shp.df <- join(shp.points, shp@data, by="id")
   } else {
-    #return(shp.df) #return() doesn't seem necessary
     shp
   }
 }
