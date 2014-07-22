@@ -1,6 +1,12 @@
 ########################################
 #shorten reading in, subsetting, and fortifying shp files
 ########################################
+#atlanta <- import_shp(location="X:/GIS/ATLANTA_CITY_LIMITS",layer="ATLANTA_CITY_LIMITS",transform="+proj=longlat +datum=WGS84")
+########################################
+
+require("rgdal") #readOGR() et al
+require("ggplot2") #fortify()
+
 import_shp <- function(location,layer,id,filter,transform,fortify) {
   #stop() if missing core arguments
   if(missing(location) || missing(layer)) {
