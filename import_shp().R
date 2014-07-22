@@ -47,7 +47,7 @@ import_shp <- function(location,layer,id,filter,transform,fortify) {
   if(fortify == TRUE) {
     shp@data$id <- rownames(shp@data)
     shp.points <- fortify(shp, region="id")
-    shp.df <- join(shp.points, shp@data, by="id")
+    shp.df <- merge(shp.points, shp@data, by="id")
   } else {
     shp
   }
