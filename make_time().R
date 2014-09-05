@@ -6,11 +6,13 @@ make_time <- function(start_time,end_time,interval) {
 	end_time <- as.POSIXct(end_time)
 	time_series <- data.frame(time=start_time)
 	keyvar <- interval
-	while((start_time + keyvar) < end_time) {
+	while((start_time + keyvar) <= end_time) {
 		time_series <- rbind(data.frame(time=start_time + keyvar),time_series)
 		keyvar <- keyvar + interval
 	}
 	time_series <- data.frame(time=time_series[order(time_series$time) , ]) #order by time
 	time_series$time <- format(time_series$time, "%H:%M") #format as e.g. 23:59
-	time_series
+	time_series.vector <- as.vector(as.matrix(time_series))
+	time_series.vector #vector output
+	#time_series #data.frame output
 }
