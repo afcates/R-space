@@ -33,12 +33,18 @@ import_shp <- function(location,layer,id,filter,transform,fortify) {
     filter <- gsub("=","==",filter,ignore.case=TRUE)
     filter <- gsub(" IN "," %in% ",filter,ignore.case=TRUE)
     filter <- gsub("\\(","c(",filter,ignore.case=TRUE)
+		if(substr(toupper(filter),0,4) == "NOT ") {
+			negate <- "!"
+			filter <- sub("NOT ","",filter,ignore.case=TRUE)
+		} else {
+			negate <- ""
+		}
     #passing a logical argument from a function is not intuitive. see http://stackoverflow.com/questions/9057006/getting-strings-recognized-as-variable-names-in-r)
-    shp <- try(shp[eval(parse(text=paste("shp$",filter,sep=""))), ]) #does as.formula(paste("shp$", filter, sep="")) work?
+    shp <- try(shp[eval(parse(text=paste(negate,"shp$",filter,sep=""))), ]) #does as.formula(paste("shp$", filter, sep="")) work?
     if (inherits(shp, "try-error")) {
-      cat(paste("*Attempting filter gave back preceding error. Filter string is probably bad. Use 'AND' 'OR' '=' 'IN' and make sure field name exists."))
+      cat(paste("*Attempting filter gave back preceding error. Make sure field name exists and is cased correctly. Filter string should use SQL style syntax, 'NOT' 'AND' 'OR' '=' 'IN', and 'NOT' should precede filter logic when negating is desired."))
     }
-    cat(paste("\nFilter: ",filter))
+    cat(paste("\nFilter: ", "shapefile$", negate, filter, sep = ""))
   } else {
     #displaying this simple message is a little too late for large files, but would get the point across anyway
     cat(paste("No 'filter' argument, loading all geometry records. To view field names for potential filter: ogrInfo(dsn=",location,",layer=",layer,")",sep=""))
