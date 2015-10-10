@@ -1,4 +1,5 @@
 library(data.table)
+library(stringdist)
 
 letters <- data.frame("x"=c("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"), stringsAsFactors=FALSE)
 
@@ -27,5 +28,17 @@ test <- replicate(10000,generate.pin(8))
 )
 
 
+pin_table <- read.csv("C:/Users/anthony/Desktop/trash/mm_pins.csv", colClasses = "character", stringsAsFactors = FALSE)
+pins <- data.table(pin_table,key="pin")
 
+results_master <- data.table("pin"=as.character(),"result"=as.character())
+#results_master <- data.table()
+for(i in pins$pin) {
+  if(length(results_master$pin) > 100) { break }
+  theresult <- amatch(i,pins[pin!=i],method="hamming",maxDist=7) #agrep(i,pins[pin!=i],useBytes=FALSE)
+  clean_result <- ifelse(length(theresult)==0,0,theresult)
+  format_result <- data.table("pin"=i,"result"=clean_result)
+  results_master <- rbind(results_master,format_result)
+}
 
+test <- amatch("NICARSRD",big$V1,method="hamming")

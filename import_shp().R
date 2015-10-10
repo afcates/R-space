@@ -1,7 +1,8 @@
 ########################################
 #shorten reading in, subsetting, and fortifying shp files
 ########################################
-#atlanta <- import_shp(location="X:/GIS/ATLANTA_CITY_LIMITS",layer="ATLANTA_CITY_LIMITS",transform="+proj=longlat +datum=WGS84")
+#georgia <- import_shp(location="C:/Users/Anthony/Desktop/Map Projects/Tiger Shapefiles 2012/tl_2012_us_state",layer="tl_2012_us_state",transform="+init=epsg:3762",filter="NAME='Georgia'")
+#geom_georgia <- geom_polygon(data=georgia,aes(long,lat,group=group), fill="darkblue", alpha = 1/2)
 ########################################
 
 require("rgdal") #readOGR() et al
@@ -49,6 +50,7 @@ import_shp <- function(location,layer,id,filter,transform,fortify) {
   } else {
     summary(shp)$proj4string
   }
+	cat(paste("\n"))
   fortify <- ifelse(missing(fortify),TRUE,fortify)
   if(fortify == TRUE) {
     shp@data$id <- rownames(shp@data)
