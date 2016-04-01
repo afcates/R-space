@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Import ESRI Shapefiles</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for import_shp"><tr><td>import_shp</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Import ESRI Shapefiles</h2>
+
+<h3>Description</h3>
+
+<p>Basically a wrapper of readOGR and ogrInfo with additional options for spatial transformations, subsetting (in SQL syntax), and fortifying to data.frame</p>
+
+
+<h3>Usage</h3>
+
+<pre>import_shp(location = NULL, layer = NULL, transform = , fortify = FALSE)</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>location</code></td>
+<td>
+<p>the location of the</p>
+</td></tr>
+<tr valign="top"><td><code>layer</code></td>
+<td>
+<p>the file name of the shp file set. defaults to last directory of location</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>the 'GEOID'</p>
+</td></tr>
+<tr valign="top"><td><code>filter</code></td>
+<td>
+<p>SQL syntax / list() for multiple conditions</p>
+</td></tr>
+<tr valign="top"><td><code>info</code></td>
+<td>
+<p>output the column names of the dbf file instead</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+##---- Should be DIRECTLY executable !! ----
+##-- ==&gt;  Define data, use random,
+##--	or do help(data=index) for the standard data sets.
+
+# http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_county_500k.zip
+detroit_mi_counties &lt;- import_shp(
+	location = "C:/gis/data/cb_2014_us_county_500k",
+	layer = "cb_2014_us_county_500k",
+	transform="+proj=longlat +datum=WGS84",
+	filter=list(
+		"STATEFP = '26'",
+		"COUNTYFP IN ('147','163','093','115','099','125')"))
+
+## The function is currently defined as
+function (x)
+{
+  }
+</pre>
+
+
+</body></html>
