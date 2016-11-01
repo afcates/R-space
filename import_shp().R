@@ -6,7 +6,8 @@
 ########################################
 
 require("rgdal") # readOGR() et al
-require("rgeos") # 
+require("rgeos")
+require("maptools") # rgeos needs this
 require("ggplot2") # fortify()
 
 import_shp <- function(location, layer, id, filter, transform, fortify) {
