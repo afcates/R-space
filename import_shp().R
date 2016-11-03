@@ -5,10 +5,10 @@
 #geom_georgia <- geom_polygon(data=georgia,aes(long,lat,group=group), fill="darkblue", alpha = 1/2)
 ########################################
 
-require("rgdal") # readOGR() et al
-require("rgeos")
-require("maptools") # rgeos needs this
-require("ggplot2") # fortify()
+library("rgdal") # readOGR() et al
+library("rgeos")
+library("maptools") # rgeos needs this
+library("ggplot2") # fortify()
 
 import_shp <- function(location, layer, id, filter, transform, fortify) {
   
